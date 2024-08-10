@@ -1,14 +1,17 @@
-# Use the official PHP image as the base
-FROM php:7.4-fpm
+# Use a Python image
+FROM python:3.8-slim
 
-# Set the working directory
-WORKDIR /var/www/html
+# Set the working directory inside the Docker container
+WORKDIR /app
 
-# Copy the current directory contents into the container
-COPY . /var/www/html
+# Copy everything in your project directory to the Docker container
+COPY . /app
 
-# Expose port 9000 for PHP-FPM
-EXPOSE 9000
+# Install the Python packages listed in requirements.txt
+RUN pip install -r requirements.txt
 
-# Start PHP-FPM
-CMD ["php-fpm"]
+# Open port 80 to allow communication with the container
+EXPOSE 80
+
+# Run your app.py file when the container starts
+CMD ["python", "app.py"]
